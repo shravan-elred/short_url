@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        body {
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+</head>
+<body>
+    <h1> <a href="http://localhost:3001">URL Shortener</a> </h1>
+    <h3>Shorten your very long URLs</h3>
+    <div>
+        <form method="POST" action="/url">
+            <label>Enter your original URL</label>
+            <input type="text" name="url" placeholder="https://your-url.com"/>
+            <button type="submit">Generate</button>
+        </form>
+        <% if (locals.result) { %>
+            <p>URL Generated : <a href="http://localhost:3001/url/<%= locals.result.shortId %>">http://localhost:3001/url/<%= locals.result.shortId %></a></p>
+        <% } %>
+        <% if (locals.data) { %>
+         <table>
+            <thead>
+                <th>#</th>
+                <th>Short ID</th>
+                <th>Short URL</th>
+                <th>Redirect</th>
+                <th>Visits</th>
+            </thead>
+            <tbody>
+                <% locals.data.forEach((url, index) => { %>
+                    <tr></tr>
+                    <td><%= index + 1 %></td>
+                    <td><%= url.shortId %></td>
+                    <td><a href="http://localhost:3001/url/<%= url.shortId %>">http://localhost:3001/url/<%= url.shortId %></a> </td>
+                    <td><a href="<%= url.redirectURL %>"><%= url.redirectURL %></a> </td>
+                    <td><%= url.visits.length %></td>
+                <% }) %>
+            </tbody>
+         </table>
+        <% } %>
+    </div>
+</body>
+</html>
